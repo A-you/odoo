@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="tfs_api_info">
+        <iframe width="100%" height="100%" frameborder="0" src="/tfs/api/info"/>
+    </t>
+
+</templates>
+

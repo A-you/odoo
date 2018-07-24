@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_form_hr_employees_inherited" model="ir.ui.view">
+            <field name="name">hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='toggle_active']" positon="before">
+                    <button name="create_user_kfjl" type="object"  class="oe_stat_button" string="设为客户经理" groups="hr.group_hr_user" />
+                    <button name="create_user_jfzy" type="object"  class="oe_stat_button" string="设为家访专员" groups="hr.group_hr_user" />
+                    <button name="create_user_zly" type="object"  class="oe_stat_button" string="设为资料员" groups="hr.group_hr_user" />
+                    <!--<field name="user_id"></field>-->
+                </xpath>
+                <!--<xpath expr="//sheet" position="before">-->
+                    <!--<header>-->
+                        <!--<button name="create_user_login" type="object" groups="hr.group_hr_user" class="oe_stat_button" string="创建登录"/>-->
+                    <!--</header>-->
+                <!--</xpath>-->
+            </field>
+
+        </record>
+
+
+        <record id="action_createuser_create_user" model="ir.actions.server" >
+            <field name="name">将该员工设为客户经理</field>
+            <!--<field groups="hr.group_hr_user"/>-->
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    action = records.create_user_kfjl()
+            </field>
+        </record>
+
+        <record id="ir_createuser_create_user" model="ir.values" >
+            <field eval="'client_action_multi'" name="key2"/>
+            <!--<field groups="hr.group_hr_user"/>-->
+            <field eval="'hr.employee'" name="model"/>
+            <field name="name" >将该员工设为客户经理</field>
+            <field eval="'ir.actions.server,%d'%action_createuser_create_user" name="value"/>
+        </record>
+
+
+        <!--设置驻行主管-->
+        <record id="action_createuser_create_zhzg" model="ir.actions.server">
+            <field name="name">将该员工设为驻行主管</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    action = records.create_user_zhzg()
+            </field>
+        </record>
+
+        <record id="ir_createuser_create_zhzg" model="ir.values">
+            <field eval="'client_action_multi'" name="key2"/>
+            <field eval="'hr.employee'" name="model"/>
+            <field name="name">将该员工设为驻行主管</field>
+            <field eval="'ir.actions.server,%d'%action_createuser_create_zhzg" name="value"/>
+        </record>
+
+        <!--设置驻行录入-->
+        <record id="action_createuser_create_zhlr" model="ir.actions.server">
+            <field name="name">将该员工设为驻行录入</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    action = records.create_user_zhlr()
+            </field>
+        </record>
+
+        <record id="ir_createuser_create_zhlr" model="ir.values">
+            <field eval="'client_action_multi'" name="key2"/>
+            <field eval="'hr.employee'" name="model"/>
+            <field name="name">将该员工设为驻行录入</field>
+            <field eval="'ir.actions.server,%d'%action_createuser_create_zhlr" name="value"/>
+        </record>
+
+        <!--设置家访专员-->
+        <record id="action_createuser_create_jfzy" model="ir.actions.server">
+            <field name="name">将该员工设为家访专员</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    action = records.create_user_jfzy()
+            </field>
+        </record>
+
+        <record id="ir_createuser_create_jfzy" model="ir.values">
+            <field eval="'client_action_multi'" name="key2"/>
+            <field eval="'hr.employee'" name="model"/>
+            <field name="name">将该员工设为家访专员</field>
+            <field eval="'ir.actions.server,%d'%action_createuser_create_jfzy" name="value"/>
+        </record>
+
+        <!--设置家访主管-->
+        <record id="action_createuser_create_jfzg" model="ir.actions.server">
+            <field name="name">将该员工设为家访主管</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    action = records.create_user_jfzg()
+            </field>
+        </record>
+
+        <record id="ir_createuser_create_jfzg" model="ir.values">
+            <field eval="'client_action_multi'" name="key2"/>
+            <field eval="'hr.employee'" name="model"/>
+            <field name="name">将该员工设为家访主管</field>
+            <field eval="'ir.actions.server,%d'%action_createuser_create_jfzg" name="value"/>
+        </record>
+
+        <!--设置电访专员-->
+        <record id="action_createuser_create_dszy" model="ir.actions.server">
+            <field name="name">将该员工设为电审专员</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    action = records.create_user_dszy()
+            </field>
+        </record>
+
+        <record id="ir_createuser_create_dszy" model="ir.values">
+            <field eval="'client_action_multi'" name="key2"/>
+            <field eval="'hr.employee'" name="model"/>
+            <field name="name">将该员工设为电审专员</field>
+            <field eval="'ir.actions.server,%d'%action_createuser_create_dszy" name="value"/>
+        </record>
+
+        <!--设置电访主管-->
+        <record id="action_createuser_create_dszg" model="ir.actions.server">
+            <field name="name">将该员工设为电访主管</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    action = records.create_user_dszg()
+            </field>
+        </record>
+
+        <record id="ir_createuser_create_dszg" model="ir.values">
+            <field eval="'client_action_multi'" name="key2"/>
+            <field eval="'hr.employee'" name="model"/>
+            <field name="name">将该员工设为电访主管</field>
+            <field eval="'ir.actions.server,%d'%action_createuser_create_dszg" name="value"/>
+        </record>
+
+        <!--设置资料员-->
+        <record id="action_createuser_create_zly" model="ir.actions.server">
+            <field name="name">将该员工设为资料员</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    action = records.create_user_zly()
+            </field>
+        </record>
+
+        <record id="ir_createuser_create_zly" model="ir.values">
+            <field eval="'client_action_multi'" name="key2"/>
+            <field eval="'hr.employee'" name="model"/>
+            <field name="name">将该员工设为资料员</field>
+            <field eval="'ir.actions.server,%d'%action_createuser_create_zly" name="value"/>
+        </record>
+
+        <!--设置风控总监-->
+        <record id="action_createuser_create_fkzj" model="ir.actions.server">
+            <field name="name">将该员工设为风控总监</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    action = records.create_user_fkzj()
+            </field>
+        </record>
+
+        <record id="ir_createuser_create_fkzj" model="ir.values">
+            <field eval="'client_action_multi'" name="key2"/>
+            <field eval="'hr.employee'" name="model"/>
+            <field name="name">将该员工设为风控总监</field>
+            <field eval="'ir.actions.server,%d'%action_createuser_create_fkzj" name="value"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_loan_credit_form" model="ir.ui.view">
+            <field name="name">loan.credit.view.form</field>
+            <field name="model">loan.credit</field>
+            <field eval="0" name="priority"/>
+            <field name="arch" type="xml">
+                <!--<fields name="edit_button_hide" invisible="1"/>-->
+                <!--<form string="信用卡分期贷款客户"  edit="0">-->
+                <form string="客户征信" create="false">
+                    <header>
+                        <button type="object" name="submit_enter" string="提交录入"
+                                attrs="{'invisible': [('state', 'not in', ('draft'))]}"
+                                groups="loan.group_loan_kfjl,loan.group_loan_manager"
+                                class="oe_highlight"/>
+                        <button type="object" name="submit_audit" string="提交审核"
+                                attrs="{'invisible': [('state', 'not in', ('entering'))]}"
+                                groups="loan.group_loan_zhlr,loan.group_loan_manager"
+                                class="oe_highlight"/>
+                        <button type="object" name="submit_re_check" string="提交复审"
+                                attrs="{'invisible': [('state', 'not in', ('auditing'))]}"
+                                groups="loan.group_loan_zhzg,loan.group_loan_manager"
+                                class="oe_highlight"/>
+                        <button type="object" name="audit_approve" string="审核同意"
+                                attrs="{'invisible': [('state', 'not in', ('auditing'))]}"
+                                groups="loan.group_loan_zhzg,loan.group_loan_manager"/>
+                        <button type="object" name="re_check_approve" string="复审同意" states="re_checking"
+                                groups="loan.group_loan_fkzj,loan.group_loan_manager"/>
+                        <button type="object" name="reject" string="复审拒绝" states="re_checking"
+                                groups="loan.group_loan_fkzj,loan.group_loan_manager" confirm="是否确认最终弃单?"/>
+                        <button type="object" name="enter_refuse" string="录入退回" states="entering"
+                                groups="loan.group_loan_zhlr,loan.group_loan_manager"/>
+                        <button type="object" name="audit_refuse" string="审核退回" states="auditing"
+                                groups="loan.group_loan_zhzg,loan.group_loan_manager"/>
+                        <button type="object" name="reset" string="重置" groups="loan.group_loan_manager"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="entering,auditing"
+                               statusbar_colors='{"draft":"red",}'/>
+                    </header>
+
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object"
+                                    class="oe_stat_button" icon="fa-archive"
+                                    groups="loan.group_loan_manager">
+                                <field name="active" widget="boolean_button"
+                                       options='{"terminology": "archive"}'/>
+                            </button>
+                            <button name="action_create_loan" class="oe_stat_button" icon="fa-credit-card"
+                                    type="object" groups="loan.group_loan_manager">
+                                <field name="loan_count" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="borrower_id" class="oe_edit_only"/>
+                            <h1>
+                                <field name="borrower_id" readonly="1"/>
+                            </h1>
+                            <field name="order" readonly="1"/>
+                        </div>
+                        <group>
+                            <group>
+                                <!--<field name="borrower_id"/>-->
+                                <field name="tag_ids"
+                                       domain="['|',('parent_id.name','=','信用卡'),
+                                           ('parent_id.parent_id.name','=','信用卡')]"
+                                       widget="many2many_tags"
+                                       options="{'no_create': True}"/>
+                            </group>
+                            <group>
+                                <field name="can_edit_credit" invisible="1"/>
+                                <field name="credit"
+                                       attrs="{
+                                       'readonly':[('can_edit_credit', '=', False),],
+                                       'required':[('can_edit_credit', '=', True),]}"/>
+                                <field name="is_contact_show" />
+                                <field name="credit_approve_time"/>
+                                <field name="credit_overdue_time" />
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_loan_credit_loan_ref" model="ir.ui.view">
+            <field name="name">loan.credit.loan.ref</field>
+            <field name="model">loan.credit</field>
+            <field eval="0" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="客户征信" default_orde="state desc,order desc"
+                      decoration-danger="state=='refused'" decoration-success="state=='approved'"
+                      colors="blue:state in ('entering','auditing');orange:state=='re_checking'">
+                    <field name="order"/>
+                    <field name="borrower_id"/>
+                    <field name="tag_ids" widget="many2many_tags"/>
+                    <field name="state"/>
+                    <field name="saler_id" string="客户经理"/>
+                    <field name="create_date" string="创建日期" widget="date"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

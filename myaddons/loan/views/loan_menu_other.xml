@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="loan_menu_other" name="相关资源"
+              parent="menu_loan_res"
+              sequence="100"
+              groups="group_loan_manager"/>
+    <menuitem id="loan_menu_other_supplier_name" name="经销商"
+              parent="loan_menu_other"
+              action="base.action_partner_supplier_form" sequence="100"/>
+    <menuitem id="loan_menu_other_res_bank_form" name="银行"
+              parent="loan_menu_other"
+              action="base.action_res_bank_form" sequence="110"
+              groups="group_loan_manager"/>
+    <menuitem id="loan_menu_other_res_partner_bank_form" name="银行账户"
+              parent="loan_menu_other"
+              action="base.action_res_partner_bank_account_form" sequence="120"
+              groups="group_loan_manager"/>
+    <!--<menuitem id="loan_menu_stat_dashboard" name="仪表板"-->
+              <!--parent="menu_loan_res"-->
+              <!--sequence="200"-->
+              <!--groups="group_loan_manager"/>-->
+</odoo>

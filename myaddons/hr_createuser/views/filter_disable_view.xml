@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_filter_settings" model="ir.ui.view">
+        <field name="name">filter settings</field>
+        <field name="model">bills.config.setting</field>
+        <field name="priority" eval="20"/>
+        <field name="arch" type="xml">
+            <form class="oe_form_configuration">
+                <header>
+                    <button string="Apply" type="object" name="execute" class="oe_highlight"/>
+                    <button string="Cancel" type="object" name="cancel" class="oe_link" special="cancel"/>
+                </header>
+                <group>
+                    <group string="设置无效单据条件">
+                        <span>(*) 设置无效单据条件</span>
+                        <separator/>
+                        <newline/>
+                        <field name="filter_state"/>
+                        <field name="filter_date"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_filter_settings" model="ir.actions.act_window">
+        <field name="name">Configure filter</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">bills.config.setting</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+    </record>
+
+    <menuitem id="filter_disable_bills_menu" name="单据无效设置" parent="filter_disable_menu"
+              sequence="0" action="action_filter_settings" groups="base.group_system"/>
+</odoo>

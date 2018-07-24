@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="wx_user_view_form" model="ir.ui.view">
+            <field name="name">wx.user.view_form</field>
+            <field name="model">wx.user</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="&#x5FAE;&#x4FE1;&#x7528;&#x6237;" version="7.0">
+                    <header>
+
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <!-- <button name="action_view_invoice" type="object" class="oe_stat_button" icon="fa-pencil-square-o" attrs="{'invisible': [('invoice_count', '=', 0)]}">
+                                <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                            </button> -->
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="nickname" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <!-- <field name="nickname"/> -->
+                                <field name="wx_id"/>
+                                <field name="remark"/>
+                                <field name="sex"/>
+                                <field name="openid"/>
+                                <field name="headimg"/>
+
+
+                            </group>
+                            <group>
+                                <field name="group_id"/>
+                                <field name="country"/>
+                                <field name="province"/>
+                                <field name="city"/>
+                                <field name="subscribe"/>
+                                <field name="subscribe_time"/>
+                            </group>
+                        </group>
+                        <!--  <notebook>
+                             <page string="Order Lines">
+
+                             </page> -->
+                        <!-- <page string="Other Information">
+
+                        </page> -->
+                        <!-- </notebook> -->
+                        <group>
+                            <field name="loc_ids"/>
+                        </group>
+                        <group>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="wx_user_view_tree" model="ir.ui.view">
+            <field name="name">wx.user.view_tree</field>
+            <field name="model">wx.user</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="&#x5FAE;&#x4FE1;&#x7528;&#x6237;">
+                    <field name="id"/>
+                    <field name="nickname"/>
+                    <field name="wx_id"/>
+                    <field name="remark"/>
+                    <field name="sex"/>
+                    <field name="openid"/>
+                    <field name="headimgurl" widget="image" height="66"/>
+                    <field name="city"/>
+                    <field name="country"/>
+                    <field name="group_id"/>
+                    <field name="province"/>
+                    <field name="subscribe"/>
+                    <field name="subscribe_time"/>
+                </tree>
+            </field>
+        </record>
+        <record id="wx_user_action" model="ir.actions.act_window">
+            <field name="name">微信用户</field>
+            <field name="res_model">wx.user</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+
+
+        </record>
+
+        <menuitem action="wx_user_action" id="wx_user_menuitem" name="微信用户" parent="parent_menu_120" sequence="10"/>
+        <record id="wx_user_action_server_126" model="ir.actions.server">
+            <field name="name">同步</field>
+            <field name="condition">env.user.has_group('oejia_wx.group_social_network_manager')</field>
+            <!--<field name="condition">True</field>-->
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_wx_user"></field>
+            <field name="state">code</field>
+
+            <field name="code">records.sync()</field>
+
+
+            <field name="usage">model</field>
+
+        </record>
+        <record model="ir.values" id="wx_user_action_server_126_src_value">
+            <field name="name">wx_user_action_server_126_src_value</field>
+            <field name="action_id" ref="wx_user_action_server_126"></field>
+            <field name="value" eval="'ir.actions.server,' + str(ref('wx_user_action_server_126'))"></field>
+            <field name="key">action</field>
+            <field name="model">wx.user</field>
+            <field name="model_id" ref="model_wx_user"></field>
+            <field name="key2">client_action_multi</field>
+            <!--<field name="loc_ids">-->
+            <!--<tree string="地理位置">-->
+            <!--<field name="loc_address"/>-->
+            <!--</tree>-->
+            <!--</field>-->
+        </record>
+
+    </data>
+</openerp>

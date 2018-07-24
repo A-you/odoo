@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_config_settings" model="ir.ui.view">
+        <field name="name">loan settings</field>
+        <field name="model">loan.config.settings</field>
+        <field name="priority" eval="20"/>
+        <field name="arch" type="xml">
+            <form class="oe_form_configuration">
+                <header>
+                    <button string="Apply" type="object" name="execute" class="oe_highlight"/>
+                    <button string="Cancel" type="object" name="cancel" class="oe_link" special="cancel"/>
+                </header>
+                <group>
+                    <group string="身份证识别">
+                        <span>(*) 使用腾讯优图</span>
+                        <separator/>
+                        <newline/>
+                        <field name="yt_appid"/>
+                        <field name="yt_secret_id"/>
+                        <field name="yt_secret_key"/>
+                        <field name="yt_userid"/>
+                    </group>
+                    <!--<group string="大数据征信">-->
+                    <!--<span>(*)使用同盾大数据</span>-->
+                    <!--<separator/>-->
+                    <!--<newline/>-->
+
+                    <!--<field name="td_online"/>-->
+                    <!--<field name="td_no_ssl_verify"/>-->
+                    <!--<field name="td_partner_code"/>-->
+                    <!--<field name="td_partner_key"/>-->
+                    <!--<field name="td_app_name"/>-->
+                    <!--</group>-->
+                </group>
+                <group>
+                    <group name="other_config" string="车型导入">
+                        <span>(*) 采集自汽车之家</span>
+                        <separator/>
+                        <newline/>
+                        <group>
+                            <field name="xls"/>
+                        </group>
+                        <newline/>
+                        <group>
+                            <separator/>
+                            <button name="btn_import_product" type="object" string="导入产品库" />
+                        </group>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_config_settings" model="ir.actions.act_window">
+        <field name="name">Configure Loan</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">loan.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+    </record>
+
+    <menuitem id="menu_loan_general_settings" name="设置" parent="menu_loan_config"
+              sequence="0" action="action_config_settings" groups="base.group_system"/>
+    <!--<menuitem id="menu_loan_general_settings1" name="设置" parent="menu_loan_config"-->
+              <!--sequence="0"  groups="base.group_system"/>-->
+</odoo>

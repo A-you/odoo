@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="module_category_loan_after" model="ir.module.category">
+        <field name="name">信用卡分期贷后数据</field>
+    </record>
+    <record id="group_loan_record_user" model="res.groups">
+        <field name="name">贷后统计用户</field>
+        <field name="category_id" ref="loan.module_category_loan"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <record id="group_loan_record_market" model="res.groups">
+        <field name="name">M贷后市场管理</field>
+        <field name="category_id" ref="loan.module_category_loan"/>
+        <field name="implied_ids" eval="[(4, ref('loan_after.group_loan_record_user'))]"/>
+    </record>
+    <record id="group_loan_record_finance" model="res.groups">
+        <field name="name">N贷后财务管理</field>
+        <field name="category_id" ref="loan.module_category_loan"/>
+        <field name="implied_ids" eval="[(4, ref('group_loan_record_user'))]"/>
+    </record>
+</odoo>

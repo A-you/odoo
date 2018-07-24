@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="seq_borrower_order" model="ir.sequence">
+            <field name="name">客户单编号</field>
+            <field name="code">loan.borrower</field>
+            <field name="prefix">BO-%(year)s%(month)s</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_credit_order" model="ir.sequence">
+            <field name="name">征信单编号</field>
+            <field name="code">loan.credit</field>
+            <field name="prefix">CR-%(year)s%(month)s</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_sale_order" model="ir.sequence">
+            <field name="name">业务单编号</field>
+            <field name="code">loan.loan</field>
+            <field name="prefix">LO-%(year)s%(month)s</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_apply_order" model="ir.sequence">
+            <field name="name">请款单编号</field>
+            <field name="code">loan.apply</field>
+            <field name="prefix">AP-%(year)s%(month)s</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!--<record id="seq_saler_order" model="ir.sequence">-->
+            <!--<field name="name">经销商编号</field>-->
+            <!--<field name="code">loan.saler</field>-->
+            <!--<field name="prefix">VD-</field>-->
+            <!--<field name="padding">4</field>-->
+            <!--<field name="number_next">1</field>-->
+            <!--<field name="company_id" eval="False"/>-->
+        <!--</record>-->
+        <!--<record id="seq_bank_order" model="ir.sequence">-->
+            <!--<field name="name">银行编号</field>-->
+            <!--<field name="code">loan.bank</field>-->
+            <!--<field name="prefix">BK-</field>-->
+            <!--<field name="padding">4</field>-->
+            <!--<field name="number_next">1</field>-->
+            <!--<field name="company_id" eval="False"/>-->
+        <!--</record>-->
+    </data>
+</odoo>

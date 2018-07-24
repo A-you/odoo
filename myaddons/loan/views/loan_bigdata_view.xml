@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_bigdata_form" model="ir.ui.view">
+            <field name="name">Loan Biga Form</field>
+            <field name="model">loan.bigdata</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object"
+                                    class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button"
+                                       options='{"terminology": "archive"}'/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                            <field name="report_time" readonly="1"/>
+                        </div>
+                        <group string="基本数据">
+                            <group>
+                                <field name="sex"/>
+                                <field name="age"/>
+                                <field name="mobile"/>
+                                <field name="identity"/>
+                                <field name="marriage"/>
+                                <field name="homeAddress"/>
+                                <field name="edu"/>
+                            </group>
+                            <group>
+                                <field name="report_id"/>
+                                <field name="final_decision"/>
+                                <field name="final_score"/>
+                            </group>
+                        </group>
+                        <group string="归属地">
+                            <group>
+                                <field name="id_card_address"/>
+                                <field name="true_ip_address"/>
+                                <field name="wifi_address"/>
+                            </group>
+                            <group>
+                                <field name="cell_address"/>
+                                <field name="bank_card_address"/>
+                                <field name="mobile_address"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="风险项检测">
+                                <group>
+                                    <field name="riskitems_ids" nolabel="1" string="多平台借贷申请检测">
+                                        <tree>
+                                            <field name="group_type" style="width:200px"/>
+                                            <field name="item_name" style="width:100px"/>
+                                            <field name="risk_level" style="width:100px"/>
+                                            <field name="item_detail"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_bigdata_tree" model="ir.ui.view">
+            <field name="name">loan bigdata tree</field>
+            <field name="model">loan.bigdata</field>
+            <field eval="0" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="征信大数据列表" decoration-danger="final_decision=='Reject'"
+                      colors="blue:final_decision =='Accept';orange:final_decision=='Review'">
+                    <field name="report_time"/>
+                    <field name="name"/>
+                    <field name="final_score"/>
+                    <field name="final_decision"/>
+                    <!--<field name="loan_id" invisible="1"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_riskitem_tree" model="ir.ui.view">
+            <field name="name">loan riskitem tree</field>
+            <field name="model">loan.riskitem</field>
+            <field eval="0" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="征信大数据风险项" decoration-danger="risk_level=='high'"
+                      colors="blue:risk_level =='low';orange:final_decision=='medium'">
+                    <field name="group_type"/>
+                    <field name="item_name"/>
+                    <field name="risk_level"/>
+                    <field name="item_detail"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

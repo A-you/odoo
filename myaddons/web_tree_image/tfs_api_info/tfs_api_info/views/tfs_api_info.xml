@@ -1,0 +1,71 @@
+<odoo>
+    <data>
+
+        <template id="assets_backend" name="Assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/tfs_api_info/static/src/js/tfs_api_info.js"></script>
+            </xpath>
+        </template>
+
+        <record id="action_tfs_api_info" model="ir.actions.client">
+            <field name="name">几米API调用</field>
+            <field name="tag">tfs_api_info.main</field>
+        </record>
+
+        <menuitem name="几米API调用" id="menu_tfs_api_info" action="action_tfs_api_info" sequence="1"/>
+
+        <record model="ir.ui.view" id="tree_res_team_user">
+            <field name="name">tfs.api.user.list.tree</field>
+            <field name="model">tfs.api.user.list</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="form_res_team_user">
+            <field name="name">tfs.api.user.list.form</field>
+            <field name="model">tfs.api.user.list</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="btn_search_list" type="object" string="查询子账户" class="btn-primary"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="password"/>
+                            </group>
+                            <labda for="lines"></labda>
+                            <field name="lines">
+                                <tree editable="top" edit="false" create="false">
+                                    <field name="name"/>
+                                    <field name="type"/>
+                                    <field name="displayflag"/>
+                                    <field name="address"/>
+                                    <field name="birth"/>
+                                    <field name="companyname"/>
+                                    <field name="email"/>
+                                    <field name="phone"/>
+                                    <field name="language"/>
+                                    <field name="sex"/>
+                                    <field name="enabledflag"/>
+                                    <field name="remark"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_tfs_api_user_list">
+            <field name="name">获取账户获取所有子账户信息</field>
+            <field name="res_model">tfs.api.user.list</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="获取账户获取所有子账户信息" id="menu_tfs_api_user_list" action="action_tfs_api_user_list" sequence="1"/>
+
+    </data>
+</odoo>

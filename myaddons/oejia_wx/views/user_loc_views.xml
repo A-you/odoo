@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="user_loc_view_form" model="ir.ui.view">
+            <field name="name">user.loc.view_form</field>
+            <field name="model">user.loc</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="loc_time"/>
+                            <field name="loc_coordinate"/>
+                            <field name="loc_address"/>
+                            <field name="loc_url" widget="url"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="user_loc_view_tree" model="ir.ui.view">
+            <field name="name">user.loc.view_tree</field>
+            <field name="model">user.loc</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree default_order="loc_time desc">
+                    <field name="user_id"/>
+                    <field name="loc_time"/>
+                    <field name="loc_coordinate"/>
+                    <field name="loc_address"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="user_loc_action" model="ir.actions.act_window">
+            <field name="name">地理位置</field>
+            <field name="res_model">user.loc</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+        </record>
+
+        <menuitem action="user_loc_action" id="user_loc_menuitem" name="地理位置" parent="parent_menu_120" sequence="10"
+        groups="base.group_no_one"/>
+        <!--<record id="user_loc_action_server_126" model="ir.actions.server">-->
+        <!--<field name="name">同步</field>-->
+        <!--<field name="condition">True</field>-->
+        <!--<field name="type">ir.actions.server</field>-->
+        <!--<field name="model_id" ref="model_wx_user"></field>-->
+        <!--<field name="state">code</field>-->
+
+        <!--<field name="code">records.sync()</field>-->
+
+
+        <!--<field name="usage">model</field>-->
+
+        <!--</record>-->
+
+
+    </data>
+</openerp>

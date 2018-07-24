@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="tfs_api_info_template">
+        <h3>access_token获取结果：<span t-esc="access_token"></span></h3>
+        <h3>该用户的子账户信息为：<span t-esc="get_users"></span></h3>
+        <h3>该用户的IMEI信息为：<span t-esc="get_devices"></span></h3>
+        <h3>该用户的IMEI最新定位信息为：<span t-esc="get_devices_location"></span></h3>
+        <h3>IMEI最新定位信息为：<span t-esc="get_devices_location_imei"></span></h3>
+        <h3>根据IMEI获取设备详细信息为：<span t-esc="get_devices_imei_info"></span></h3>
+        <h3>根据IMEI获取轨迹数据为：<span t-esc="get_devices_imei_track"></span></h3>
+    </template>
+
+
+</odoo>

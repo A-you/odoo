@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+        <record id="view_from_inherit_apply" model="ir.ui.view">
+            <field name="name">loan apply view form</field>
+            <field name="model">loan.apply</field>
+            <field name="inherit_id" ref="loan.view_loan_apply_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='reset']" positon="before">
+                    <button name="action_create_basis" type="object"  class="oe_stat_button" string="设为贷后" />
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

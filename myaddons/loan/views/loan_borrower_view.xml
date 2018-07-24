@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_loan_borrower_form" model="ir.ui.view">
+            <field name="name">loan.borrower.view.form</field>
+            <field name="model">loan.borrower</field>
+            <field eval="0" name="priority"/>
+            <field name="arch" type="xml">
+                <form string="客户信息">
+                    <header>
+                        <button name="action_confirm" states="draft" groups="loan.group_loan_kfjl,loan.group_loan_manager" string="确认"
+                                class="btn-primary"
+                                type="object"/>
+                        <button name="action_draft" states="confirmed" groups="loan.group_loan_manager" string="重置"
+                                class="btn-primary"
+                                type="object"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object"
+                                    class="oe_stat_button" icon="fa-archive"
+                                    groups="loan.group_loan_manager">
+                                <field name="active" widget="boolean_button"
+                                       options='{"terminology": "archive"}'/>
+                            </button>
+                            <button name="action_create_credit" class="oe_stat_button" icon="fa-credit-card"
+                                    type="object" groups="loan.group_loan_manager">
+                                <field name="credit_count" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                            <field name="order" readonly="1"/>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="saler_id" groups="loan.group_loan_manager"/>
+                                <field name="phone"/>
+                                <field name="identity" readonly="1"/>
+                                <field name="address" readonly="1"/>
+                                <field name="partner_id" readonly="1" required="0"/>
+                            </group>
+                            <group>
+                                <field name="frontimage" widget="image" class="oe_avatar"
+                                       attrs="{'readonly': [('state', 'in', ('confirmed',))]}"/>
+                                <field name="backimage" widget="image" class="oe_avatar"
+                                       attrs="{'readonly': [('state', 'in', ('confirmed',))]}"/>
+                                <field name="information_attachment" widget="many2many_binary" invisible="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="view_loan_borrower_list" model="ir.ui.view">
+            <field name="name">loan.borrower.view.list</field>
+            <field name="model">loan.borrower</field>
+            <field eval="0" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="客户信息" decoration-success="state=='confirmed'">
+                    <field name="order"/>
+                    <field name="name" string="客户姓名"/>
+                    <field name="identity" />
+                    <field name="phone"/>
+                    <field name="state"/>
+                    <field name="saler_id" string="客户经理"/>
+                    <field name="create_date" string="创建日期" />
+                </tree>
+            </field>
+        </record>
+
+        <!--&lt;!&ndash; Add option to the "More" button &ndash;&gt;-->
+        <!--<act_window id="action_loan_relation_search" name="查询：关联征信"-->
+        <!--res_model="loan.credit" src_model="loan.borrower" multi="False"-->
+        <!--context="{'default_borrower_id': id}"-->
+        <!--domain="[('borrower_id','=',default_borrower_id)]"/>-->
+
+        <!--<record id="loan_borrower_create_credit_action_server" model="ir.actions.server">-->
+        <!--<field name="name">生成征信查询</field>-->
+        <!--<field name="condition">True</field>-->
+        <!--<field name="type">ir.actions.server</field>-->
+        <!--<field name="model_id" ref="model_loan_borrower"></field>-->
+        <!--<field name="state">code</field>-->
+        <!--<field name="code">records.create_credit()</field>-->
+        <!--<field name="usage">model</field>-->
+        <!--</record>-->
+        <!--<record model="ir.values" id="loan_borrower_create_credit_action_server_src_value">-->
+        <!--<field name="name">loan.borrower.create.credit.action.server.src.value</field>-->
+        <!--<field name="action_id" ref="loan_borrower_create_credit_action_server"></field>-->
+        <!--<field name="value"-->
+        <!--eval="'ir.actions.server,' + str(ref('loan_borrower_create_credit_action_server'))"></field>-->
+        <!--<field name="key">action</field>-->
+        <!--<field name="model">loan.borrower</field>-->
+        <!--<field name="model_id" ref="model_loan_borrower"></field>-->
+        <!--<field name="key2">client_action_multi</field>-->
+        <!--&lt;!&ndash;<field name="multi">False</field>&ndash;&gt;-->
+        <!--&lt;!&ndash;不清楚对list的控制办法&ndash;&gt;-->
+        <!--</record>-->
+
+    </data>
+</odoo>

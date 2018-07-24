@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="loan_record_stage_tree" model="ir.ui.view">
+        <field name="name">loan.record.stage.tree</field>
+        <field name="model">loan.record.stage</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="loan_record_stage_form" model="ir.ui.view">
+        <field name="name">loan.record.stage.from</field>
+        <field name="model">loan.record.stage</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                    <field name="fold"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="loan_record_stage_action" model="ir.actions.act_window">
+        <field name="name">record.stage</field>
+        <field name="res_model">loan.record.stage</field>
+        <!--<field name="view_type">form</field>-->
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_loan_record_stage_conf" name="记录阶段设置" sequence="10"
+                          action="loan_record_stage_action" parent="loan.menu_loan_config"/>
+</odoo>

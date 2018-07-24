@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_loan_form" model="ir.ui.view">
+            <field name="name">loan.view.form</field>
+            <field name="model">loan.loan</field>
+            <field eval="0" name="priority"/>
+            <field name="arch" type="xml">
+                <form string="信用卡分期贷款" create="false">
+                    <header>
+                        <field name="can_show_submit_button" invisible="1"/>
+                        <button type="object" name="submit" string="提交"
+                                attrs="{'invisible':[('can_show_submit_button', '=', False),]}"/>
+                        <field name="can_show_common_button" invisible="1"/>
+                        <button type="object" name="approve" string="同意"
+                                attrs="{'invisible':[('can_show_common_button', '=', False),]}"/>
+                        <button type="object" name="refuse" string="退回"
+                                attrs="{'invisible':[('can_show_common_button', '=', False),]}"/>
+                        <field name="can_show_reject_button" invisible="1"/>
+                        <button type="object" name="reject" string="拒绝"
+                                attrs="{'invisible':[('can_show_reject_button', '=', False),]}"/>
+                        <field name="can_show_reset_button" invisible="1"/>
+                        <button type="object" name="reset" string="重置"
+                                attrs="{'invisible':[('can_show_reset_button', '=', False),]}"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="homing,auditing"/>
+                        <!--statusbar_visible="draft,homing,phoning,auditing,applyinge,approving,approved,refused"/>-->
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" name="attachment_tree_view" type="object" icon="fa-archive">
+                                <div class="o_stat_info">
+                                    <span class="o_stat_text">附件数量</span>
+                                    <field name="doc_count" />
+                                </div>
+                            </button>
+                        </div>
+                        <div class="oe_button_box" name="button_box">
+
+                        </div>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object"
+                                    class="oe_stat_button" icon="fa-archive"
+                                    groups="loan.group_loan_manager">
+                                <field name="active" widget="boolean_button"
+                                       options='{"terminology": "archive"}'/>
+                            </button>
+                            <button name="action_exchange_borrower" class="oe_stat_button" icon="fa-exchange"
+                                    type="object" string="主共贷互换" confirm="是否确认主共贷互换?"
+                                    groups="loan.group_loan_manager,loan.group_loan_kfjl">
+                                <!--<field name="relation_ids" widget="statinfo" />-->
+                            </button>
+                            <button name="action_bigdata_credit" class="oe_stat_button" icon="fa-search"
+                                    type="object" string="大数据征信"
+                                    attrs="{'invisible': [('bigdata_credit_count','!=',0)]}"
+                                    groups="loan.group_loan_manager,loan.group_loan_dszg,loan.group_loan_dszy,loan.group_loan_fkzj">
+                                <!--<field name="bigdata_credit_count" widget="statinfo"/>-->
+                            </button>
+                            <button name="%(action_loan_bigdata)d" class="oe_stat_button" icon="fa-list"
+                                    type="action" attrs="{'invisible': [('bigdata_credit_count','=',0)]}"
+                                    context="{'default_borrower_id': borrower_id}" string=""
+                                    groups="loan.group_loan_manager,loan.group_loan_dszg,loan.group_loan_dszy,loan.group_loan_fkzj">
+
+                                <field name="bigdata_credit_count" widget="statinfo"/>
+                            </button>
+                            <button name="action_create_apply" class="oe_stat_button" icon="fa-money"
+                                    type="object" groups="loan.group_loan_manager">
+                                <field name="apply_count" widget="statinfo"/>
+                            </button>
+                            <!--<button class="oe_stat_button" type="object" context="{'partner_id': partner_id}" name="action_schedule_meeting" icon="fa-calendar">-->
+                            <!--<div class="o_stat_info">-->
+                            <!--<field name="meeting_count" class="o_stat_value"/>-->
+                            <!--<span class="o_stat_text" attrs="{'invisible': [('meeting_count', '&lt;', 2)]}"> Meetings</span>-->
+                            <!--<span class="o_stat_text" attrs="{'invisible': [('meeting_count', '&gt;', 1)]}"> Meeting</span>-->
+                            <!--</div>-->
+                            <!--</button>-->
+                        </div>
+                        <!--<div class="oe_title">-->
+                        <!--<h1>-->
+                        <!--&lt;!&ndash;信用卡分期贷款&ndash;&gt;-->
+                        <!--<field name="borrower_name"/>-->
+                        <!--</h1>-->
+                        <!--<field name="order"/>-->
+                        <!--</div>-->
+                        <div class="oe_title">
+                            <label for="credit_id" class="oe_edit_only"/>
+                            <h1>
+                                <field name="credit_id" readonly="1"/>
+                            </h1>
+                            <field name="order" readonly="1"/>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="borrower_id" invisible="1"/>
+                                <field name="identity"/>
+                                <field name="age"/>
+                            </group>
+                            <group>
+                                <field name="create_date" string="进件日期" readonly="1"/>
+                                <!--<field name="date_limit" eval="(datetime.now() - timedelta(days=30)).strftime('%Y-%m-%d %H:%M:%S')" invisible="0"/>-->
+                                <field name="saler_id" default=""/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="关系人资料">
+                                <group>
+                                    <field name="relation_ids"   widget="many2many_tags" nolabel="1"
+                                           domain=" [('is_contact_show', '=' , True),('credit_overdue_time','&gt;=',datetime.datetime.now().strftime('%Y-%m-%d'))]"
+                                           attrs="{ 'readonly': [('state', 'not in', ('draft','homing','phoning'))]}">
+                                        <!--<field name="relation_ids" nolabel="1"-->
+                                        <!--domain="[('state', '=', 'approved'),('id', '!=', credit_id),('create_date','>','date_limit')]"-->
+                                        <!--attrs="{ 'readonly': [('state', 'not in', ('draft','homing','phoning'))]}">-->
+                                        <!--<tree string="客户征信">-->
+                                        <!--&lt;!&ndash;<field name="name"/>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<field name="relationship"/>&ndash;&gt;-->
+                                        <!--</tree>-->
+                                    </field>
+                                </group>
+                            </page>
+                            <page string="金融方案">
+                                <group>
+                                    <group>
+                                        <field name="product_id" options='{"no_create": True,"no_open": True}'
+                                               attrs="{ 'readonly': [('state', 'not in', ('draft','homing','phoning'))]}"/>
+                                        <field name="vendor_id" options='{"no_create": True,"no_open": True}'
+                                               attrs="{ 'readonly': [('state', 'not in', ('draft','homing','phoning'))]}"/>
+                                        <field name="finance_id" options='{"no_create": True,"no_open": True}'
+                                               attrs="{ 'readonly': [('state', 'not in', ('draft','homing','phoning'))]}"/>
+                                        <field name="total_amount" widget="monetary"
+                                               attrs="{ 'readonly': [('state', 'not in', ('draft','homing','phoning'))]}"/>
+                                        <field name="loans" widget="monetary"
+                                               attrs="{ 'readonly': [('state', 'not in', ('draft','homing','phoning'))]}"/>
+                                        <field name="contract_rate"
+                                               attrs="{ 'readonly': [('state', 'not in', ('draft','homing','phoning'))]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="product_url" widget="url" default="" readonly="1"/>
+                                        <field name="bank_rate"/>
+                                        <field name="loansinterest"/>
+                                        <field name="down_payment" widget="monetary"/>
+                                        <field name="loansinterest_ratio"/>
+                                        <field name="repayment_periods_number" invisible="1"/>
+                                        <field name="month_payment"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="调查情况"
+                                  groups="loan.group_loan_jfzy,loan.group_loan_jfzg,loan.group_loan_dszy,
+                                  loan.group_loan_dszg,loan.group_loan_fkzj,loan.group_loan_cwzj,loan.group_loan_manager">
+                                <group>
+                                    <group>
+                                        <field name="homing_id" string="调查员"
+                                               options='{"no_create": True,"no_open": True}'
+                                               attrs="{ 'readonly': [('state', 'not in', ('draft','homing','phoning'))]}"/>
+                                        <field name="homing_time"
+                                               attrs="{ 'readonly': [('state', 'not in', ('draft','homing','phoning'))]}"/>
+                                        <field name="homing_address"
+                                               attrs="{ 'readonly': [('state', 'not in', ('draft','homing','phoning'))]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="homing_result"
+                                               attrs="{ 'readonly': [('state', 'not in', ('draft','homing','phoning'))]}"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="电核情况"
+                                  groups="loan.group_loan_jfzy,loan.group_loan_jfzg,loan.group_loan_dszy,
+                                  loan.group_loan_dszg,loan.group_loan_fkzj,loan.group_loan_cwzj,loan.group_loan_manager">
+                                <!--attrs="{'invisible':[('state', 'in', ('phoning',)),]}">-->
+                                <group>
+                                    <group>
+                                        <field name="phoning_opt1" widget="checkbox"
+                                               attrs="{ 'readonly': [('state', 'not in', ('draft','homing','phoning'))]}"/>
+                                        <field name="phoning_opt2" widget="checkbox"
+                                               attrs="{ 'readonly': [('state', 'not in', ('draft','homing','phoning'))]}"/>
+                                        <field name="phoning_opt3" widget="checkbox"
+                                               attrs="{ 'readonly': [('state', 'not in', ('draft','homing','phoning'))]}"/>
+                                        <field name="phoning_opt4" widget="checkbox"
+                                               attrs="{ 'readonly': [('state', 'not in', ('draft','homing','phoning'))]}"/>
+                                        <field name="phoning_opt5" widget="checkbox"
+                                               attrs="{ 'readonly': [('state', 'not in', ('draft','homing','phoning'))]}"/>
+                                        <field name="phoning_opt6" widget="checkbox"
+                                               attrs="{ 'readonly': [('state', 'not in', ('draft','homing','phoning'))]}"/>
+                                        <field name="phoning_opt7" widget="checkbox"
+                                               attrs="{ 'readonly': [('state', 'not in', ('draft','homing','phoning'))]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="phoning_id" string="电审员"
+                                               options='{"no_create": True,"no_open": True}'
+                                               attrs="{ 'readonly': [('state', 'not in', ('draft','homing','phoning'))]}"/>
+                                        <field name="phoning_time"
+                                               attrs="{ 'readonly': [('state', 'not in', ('draft','homing','phoning'))]}"/>
+                                        <field name="phoning_result"
+                                               attrs="{ 'readonly': [('state', 'not in', ('draft','homing','phoning'))]}"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="审贷情况">
+                                <group>
+                                    <group>
+                                        <field name="can_edit_suggest" invisible="1"/>
+                                        <field name="GPS_suggest"
+                                               attrs="{'readonly':[('can_edit_suggest','=',False),]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="loan_suggest"
+                                               attrs="{'readonly':[('can_edit_suggest','=',False),]}"/>
+                                    </group>
+                                </group>
+                            </page>
+
+
+                            <!--</group>-->
+                            <!--</page>-->
+                            <!--<page string="请款申请">-->
+                            <!--<group>-->
+
+                            <!--</group>-->
+                            <!--</page>-->
+                            <!--<page string="信用卡资料">-->
+                            <!--<group>-->
+
+                            <!--</group>-->
+                            <!--</page>-->
+                            <!--<page string="放款情况">-->
+                            <!--<group>-->
+
+                            <!--</group>-->
+                            <!--</page>-->
+                            <!--<page string="贷后管理">-->
+                            <!--<group>-->
+
+                            <!--</group>-->
+                            <!--</page>-->
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="view_loan_list" model="ir.ui.view">
+            <field name="name">loan.view.list</field>
+            <field name="model">loan.loan</field>
+            <field eval="0" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="信用卡分期贷款"
+                      decoration-danger="state=='refused'" decoration-success="state=='approved'"
+                      colors="blue:state in ('homing','phoning');orange:state=='auditing'">
+                    <field name="order"/>
+                    <field name="credit_id"/>
+                    <field name="state"/>
+                    <field name="saler_id"/>
+                    <field name="homing_id" invisible="1"/>
+                    <field name="phoning_id" invisible="1"/>
+                    <field name="create_date" string="创建日期"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- Action to open To-do Task list -->
+    <!--<act_window id="action_loan_customer"-->
+    <!--name="客户信息"-->
+    <!--res_model="loan.customer"-->
+    <!--view_mode="tree,form,kanban"/>-->
+    <act_window id="action_loan_borrower"
+                name="客户信息"
+                res_model="loan.borrower"
+                context="{'readonly_by_pass': True}"
+                view_mode="tree,form,graph,pivot"/>
+
+    <!--<act_window id="action_loan_credit_tag"-->
+    <!--name="征信标签信息"-->
+    <!--res_model="loan.credit.tag"-->
+    <!--view_mode="tree,form"/>-->
+    <record id="view_loan_credit_list" model="ir.ui.view">
+        <field name="name">loan.credit.view.list</field>
+        <field name="model">loan.credit</field>
+        <field eval="10" name="priority"/>
+        <field name="arch" type="xml">
+            <tree string="客户征信" default_orde="order desc" create="false"
+                  decoration-danger="state=='refused'" decoration-success="state=='approved'"
+                  colors="blue:state in ('entering','auditing');orange:state=='re_checking'">
+                <field name="order"/>
+                <field name="borrower_id"/>
+                <field name="tag_ids" widget="many2many_tags"/>
+                <field name="state"/>
+                <field name="saler_id" string="客户经理"/>
+                <field name="create_date" string="创建日期" />
+            </tree>
+        </field>
+    </record>
+    <act_window id="action_loan_credit"
+                name="征信信息"
+                res_model="loan.credit"
+                view_mode="tree,form,graph,pivot"
+                view_id="view_loan_credit_list"/>
+
+    <act_window id="action_loan"
+                name="业务信息"
+                res_model="loan.loan"
+                context="{'readonly_by_pass': True}"
+                view_mode="tree,form,graph,pivot"/>
+    <act_window id="action_loan_apply"
+                name="请款信息"
+                res_model="loan.apply"
+                context="{'readonly_by_pass': True}"
+                view_mode="tree,form,graph,pivot"/>
+    <!--<act_window id="action_loan_product_list_hierachy"-->
+    <!--name="产品"-->
+    <!--res_model="loan.product"-->
+    <!--view_type="tree"-->
+    <!--domain="[('parent_id','=',False)]"-->
+    <!--view_id="view_loan_product_list_hierachy"/>-->
+    <!--<act_window id="action_loan_product"-->
+    <!--name="产品"-->
+    <!--res_model="loan.product"-->
+    <!--view_mode="tree,form"/>-->
+    <!--<act_window id="action_loan_finance"-->
+    <!--name="金融方案"-->
+    <!--res_model="loan.finance"-->
+    <!--view_mode="tree,form"/>-->
+    <!--<act_window id="action_loan_saler"-->
+    <!--name="经销商"-->
+    <!--res_model="loan.saler"-->
+    <!--view_mode="tree,form"/>-->
+    <!--<act_window id="action_loan_bank"-->
+    <!--name="银行"-->
+    <!--res_model="loan.bank"-->
+    <!--view_mode="tree,form"/>-->
+    <act_window id="action_loan_bigdata"
+                name="大数据征信"
+                res_model="loan.bigdata"
+                view_mode="tree,form"
+                domain="[('borrower_id','=',default_borrower_id),('borrower_id','!=',False)]"/>
+
+    <!--<record id="action_loan_bigdata" model="ir.actions.act_window">-->
+    <!--<field name="name">大数据征信</field>-->
+    <!--<field name="res_model">loan.loan</field>-->
+    <!--<field name="src_model">loan.bigdata</field>-->
+    <!--<field name="view_mode">tree,form</field>-->
+    <!--&lt;!&ndash;<field name="context">{'default_loan_id': active_id,}</field>&ndash;&gt;-->
+    <!--&lt;!&ndash;<field name="domain">[('loan_id', '=', active_id)]</field>&ndash;&gt;-->
+    <!--</record>-->
+
+    <!-- Menu item to open To-do Task list -->
+    <menuitem id="menu_loan"
+              name="信用卡分期"
+              web_icon="loan,static/description/icon.png"
+    />
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="menu_loan_view" name="流程审批" parent="menu_loan" sequence="10"/>
+    <menuitem id="menu_loan_borrower" name="客户录入" parent="menu_loan_view" action="action_loan_borrower" sequence="10"
+              groups="group_loan_manager,group_loan_kfjl"/>
+    <!--<menuitem id="menu_loan_customer" name="客户录入" parent="menu_loan_view" action="action_loan_customer" sequence="100"/>-->
+    <menuitem id="menu_loan_credit" name="征信查询" parent="menu_loan_view" action="action_loan_credit" sequence="110"
+              groups="group_loan_manager,group_loan_kfjl,group_loan_zhlr,group_loan_zhzg,group_loan_fkzj"/>
+    <menuitem id="menu_loan_loan" name="业务申请" parent="menu_loan_view" action="action_loan" sequence="200"
+              groups="group_loan_manager,group_loan_kfjl,group_loan_jfzy,group_loan_jfzg,group_loan_dszy,group_loan_dszg,group_loan_fkzj"/>
+    <menuitem id="menu_loan_apply" name="请款申请" parent="menu_loan_view" action="action_loan_apply" sequence="210"
+              groups="group_loan_manager,group_loan_kfjl,group_loan_documenter,group_loan_cwzj,group_loan_account,group_loan_cashier"/>
+    />
+    <!--<menuitem id="menu_loan_visit" name="家访单" parent="menu_loan_view" action="action_loan_customer" sequence="300"/>-->
+    <!--<menuitem id="menu_loan_phone" name="电审单" parent="menu_loan_view" action="action_loan" sequence="400"/>-->
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="menu_loan_res" name="资料管理" parent="menu_loan" sequence="20" groups="group_loan_manager"/>
+
+    <menuitem id="menu_loan_stat" name="统计分析" parent="menu_loan" sequence="50"
+              groups="group_loan_manager,group_loan_cwzj,group_loan_fkzj"/>
+    <!--<menuitem id="menu_loan_stat1" name="仪表板" parent="menu_loan_stat" sequence="15"/>-->
+    <menuitem id="menu_loan_config" name="系统设置" parent="menu_loan" sequence="30" groups="group_loan_manager"/>
+    <!--<menuitem id="menu_loan_config_custom" name="用户管理" parent="menu_loan_config" action="action_loan" sequence="100"/>-->
+
+</odoo>

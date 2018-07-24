@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="mt_credit_todo" model="mail.message.subtype">
+            <field name="name">征信待办提醒</field>
+            <field name="res_model">loan.credit</field>
+            <field name="default" eval="False"/>
+            <field name="description">有待办征信查询任务，请立即处理！</field>
+        </record>
+        <record id="mt_loan_todo" model="mail.message.subtype">
+            <field name="name">业务待办提醒</field>
+            <field name="res_model">loan.loan</field>
+            <field name="default" eval="False"/>
+            <field name="description">有待办业务申请任务，请立即处理！</field>
+        </record>
+        <record id="mt_apply_todo" model="mail.message.subtype">
+            <field name="name">请款待办提醒</field>
+            <field name="res_model">loan.apply</field>
+            <field name="default" eval="False"/>
+            <field name="description">有待办请款申请任务，请立即处理！</field>
+        </record>
+        <!--<record id="mt_credit_zhlr_todo" model="mail.message.subtype">-->
+            <!--<field name="name">驻行录入提醒</field>-->
+            <!--<field name="res_model">loan.credit</field>-->
+            <!--<field name="default" eval="False"/>-->
+            <!--<field name="description">有待办征信录入任务，请立即处理！</field>-->
+        <!--</record>-->
+        <!--<record id="mt_credit_zhzg_todo" model="mail.message.subtype">-->
+            <!--<field name="name">驻行主管提醒</field>-->
+            <!--<field name="res_model">loan.credit</field>-->
+            <!--<field name="default" eval="False"/>-->
+            <!--<field name="description">有待办征信审核任务，请立即处理！</field>-->
+        <!--</record>-->
+        <!--<record id="mt_credit_fkzj_todo" model="mail.message.subtype">-->
+            <!--<field name="name">风控总监征信提醒</field>-->
+            <!--<field name="res_model">loan.credit</field>-->
+            <!--<field name="default" eval="False"/>-->
+            <!--<field name="description">有待办征信审核任务，请立即处理！</field>-->
+        <!--</record>-->
+        <!--<record id="mt_loan_dszg_todo" model="mail.message.subtype">-->
+            <!--<field name="name">电审主管提醒</field>-->
+            <!--<field name="res_model">loan.loan</field>-->
+            <!--<field name="default" eval="False"/>-->
+            <!--<field name="description">有待办业务审核任务，请立即处理！</field>-->
+        <!--</record>-->
+        <!--<record id="mt_loan_fkzj_todo" model="mail.message.subtype">-->
+            <!--<field name="name">风控总监业务提醒</field>-->
+            <!--<field name="res_model">loan.loan</field>-->
+            <!--<field name="default" eval="False"/>-->
+            <!--<field name="description">有待办业务审核任务，请立即处理！</field>-->
+        <!--</record>-->
+        <!--<record id="mt_apply_zlsh_todo" model="mail.message.subtype">-->
+            <!--<field name="name">资料审核提醒</field>-->
+            <!--<field name="res_model">loan.apply</field>-->
+            <!--<field name="default" eval="False"/>-->
+            <!--<field name="description">有待办请款审核任务，请立即处理！</field>-->
+        <!--</record>-->
+        <!--<record id="mt_apply_cwzj_todo" model="mail.message.subtype">-->
+            <!--<field name="name">财务总监提醒</field>-->
+            <!--<field name="res_model">loan.apply</field>-->
+            <!--<field name="default" eval="False"/>-->
+            <!--<field name="description">有待办请款审核任务，请立即处理！</field>-->
+        <!--</record>-->
+        <!--<record id="mt_apply_account_todo" model="mail.message.subtype">-->
+            <!--<field name="name">会计提醒</field>-->
+            <!--<field name="res_model">loan.apply</field>-->
+            <!--<field name="default" eval="False"/>-->
+            <!--<field name="description">有待办请款审核任务，请立即处理！</field>-->
+        <!--</record>-->
+        <!--<record id="mt_apply_cashier_todo" model="mail.message.subtype">-->
+            <!--<field name="name">出纳提醒</field>-->
+            <!--<field name="res_model">loan.apply</field>-->
+            <!--<field name="default" eval="False"/>-->
+            <!--<field name="description">有待办请款审核任务，请立即处理！</field>-->
+        <!--</record>-->
+        <!--<record id="mt_apply_zlsh_todo" model="mail.message.subtype">-->
+            <!--<field name="name">资料审核提醒</field>-->
+            <!--<field name="res_model">loan.apply</field>-->
+            <!--<field name="default" eval="False"/>-->
+            <!--<field name="description">有待办征信审核任务，请立即处理！</field>-->
+        <!--</record>-->
+    </data>
+</odoo>

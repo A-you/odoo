@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_wx_user_user,wx.user.user,model_wx_user,oejia_wx.group_social_network_user,1,1,0,0
+access_wx_user_group_user,wx.user.group.user,model_wx_user_group,oejia_wx.group_social_network_user,1,1,0,0
+access_user_loc_user,wx.user.loc.user,model_user_loc,oejia_wx.group_social_network_user,1,1,0,0
+access_wx_act_article_operator,wx.act.article.operator,model_wx_action_act_article,oejia_wx.group_social_network_operator,1,1,1,1
+access_wx_act_custom_operator,wx.act.custom.operator,model_wx_action_act_custom,oejia_wx.group_social_network_operator,1,1,1,1
+access_wx_act_text_operator,wx.act.text.operator,model_wx_action_act_text,oejia_wx.group_social_network_operator,1,1,1,1
+access_wx_articlesreply_operator,wx.articlesreply.operator,model_wx_articlesreply_article,oejia_wx.group_social_network_operator,1,1,1,1
+access_wx_autorelply_operator,wx.autoreply.operator,model_wx_autoreply,oejia_wx.group_social_network_operator,1,1,1,1
+access_wx_user_admin,wx.user.admin,model_wx_user,base.group_system,1,1,1,1

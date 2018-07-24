@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+		<data>
+				<record model="ir.ui.view" id="hm_partner_form_view">
+						<field name="name">hm.partner.form.view</field>
+						<field name="model">res.partner</field>
+						<field name="inherit_id" ref="base.view_partner_form"/>
+						<field name="arch" type="xml">
+								<field name="city" position="before">
+										<field name="district" domain="[('city','=',city)]"/>
+								</field>
+								<field name="city" position="attributes">
+										<attribute name="domain">[('state','=',state_id)]</attribute>
+								</field>
+								<field name="state_id" position="attributes">
+										<attribute name="domain">[('country_id','=',country_id)]</attribute>
+								</field>
+						</field>
+				</record>
+				<!--<record model="ir.ui.view" id="hm_employee_form_view">-->
+						<!--<field name="name">hm.employee.form.view</field>-->
+						<!--<field name="model">hr.employee</field>-->
+						<!--<field name="inherit_id" ref="hr.view_employee_form"/>-->
+						<!--<field name="arch" type="xml">-->
+								<!--&lt;!&ndash;<field name="city" position="before">&ndash;&gt;-->
+										<!--&lt;!&ndash;<field name="district" domain="[('city','=',city)]"/>&ndash;&gt;-->
+								<!--&lt;!&ndash;</field>&ndash;&gt;-->
+								<!--&lt;!&ndash;<field name="city" position="attributes">&ndash;&gt;-->
+										<!--&lt;!&ndash;<attribute name="domain">[('state','=',state_id)]</attribute>&ndash;&gt;-->
+								<!--&lt;!&ndash;</field>&ndash;&gt;-->
+								<!--&lt;!&ndash;<field name="state_id" position="attributes">&ndash;&gt;-->
+										<!--&lt;!&ndash;<attribute name="domain">[('country_id','=',country_id)]</attribute>&ndash;&gt;-->
+								<!--&lt;!&ndash;</field>&ndash;&gt;-->
+						<!--</field>-->
+				<!--</record>-->
+		</data>
+</odoo>

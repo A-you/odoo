@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 总的form视图，均为只读字段-->
+    <record id="view_loan_after_form" model="ir.ui.view">
+        <field name="name">loan.count.view.from</field>
+        <field name="model">loan.record</field>
+        <field name="priority">15</field>
+        <field name="arch" type="xml">
+            <form string="贷后基础数据">
+                <header>
+                </header>
+                <sheet>
+                    <div class="oe_title" style="float: left;">
+                            <label for="apply_id" class="oe_edit_only"/>
+                            <h3>
+                                <field name="customer_name" readonly="1"/>
+                                <!--<field name="name" invisible="1"/>-->
+                            </h3>
+                            <field name="order" readonly="1"/>
+                    </div>
+                    <div class="oe_button_box" name="button_box" style="float: right;">
+                        <button name="action_edit_finance" type="object"
+                                    class="oe_stat_button" icon="fa-archive" string="财务资料补充"/>
+                        <button name="action_edit_bank_num" type="object"
+                                    class="oe_stat_button" icon="fa-archive" string="银行卡信息补录"/>
+                        <button name="action_edit_pledge_case" type="object"
+                                    class="oe_stat_button" icon="fa-archive" string="抵押确认"/>
+                        <button name="action_edit_original_record" type="object"
+                                    class="oe_stat_button" icon="fa-archive" string="原件记录"/>
+                        <button name="action_edit_copies_record" type="object"
+                                    class="oe_stat_button" icon="fa-archive" string="扫描件记录"/>
+                        <button class="oe_stat_button" name="attachment_tree_view" type="object" icon="fa-archive">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">附件数量</span>
+                                <field name="doc_count" />
+                            </div>
+                         </button>
+                    </div>
+                    <group >
+                        <group name="left">
+                            <field name="credit_id" readonly="1"/>
+                            <field name="loan_id"/>
+                            <field name="borrower_id" invisible="1"/>
+                        </group>
+                        <group name="right">
+                            <field name="partner_id"  readonly="1"/>
+                            <field name="product_id" readonly="1"/>
+                            <field name="finance_name" readonly="1" invisible="1"/>
+                            <field name="finance_id" readonly="1"/>
+                            <field name="bank_card" widget="image" class="oe_avatar" invisible="1"/>
+
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="详细资料">
+                            <group>
+                                <group>
+                                    <!--<field name="customer_name"/>-->
+                                    <field name="identity"/>
+                                    <field name="sex" readonly="1"/>
+                                    <field name="age"/>
+                                    <field name="phone" readonly="1"/>
+                                    <field name="address" readonly="1"/>
+                                    <field name="maddress" readonly="1"/>
+                                    <field name="elseaddress" readonly="1"/>
+                                    <field name="work_unit" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="saler_id" readonly="1"/>
+                                    <field name="saler_phone" readonly="1"/>
+                                    <field name="frontimage" widget="image" class="oe_avatar" readonly="1"/>
+                                    <field name="backimage" widget="image" class="oe_avatar" readonly="1"/>
+                                    <field name="information_attachment" widget="many2many_binary" invisible="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="关系人">
+                            <group string="业务关系人">
+                                <field name="relation_ids" widget="many2many_kanban" options="{'not_delete': True}" readonly="1"/>
+                                <field name="relation_descriptions"/>
+                            </group>
+                            <group string="紧急联系人">
+                                <field name="linkman" widget="many2many_kanban">
+                                    <kanban>
+                                        <field name="name"/>
+                                        <field name="title"/>
+                                        <field name="phone"/>
+                                        <field name="function"/>
+                                        <field name="comment"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div class="oe_kanban_global_click" style="position: relative">
+                                                    <a t-if="! read_only_mode" type="delete" style="position: absolute; right: 0; padding: 4px; diplay: inline-block">X</a>
+                                                    <div class="oe_module_vignette">
+                                                        <img t-att-src= '_s + "/base/static/src/img/avatar.png"' style="width:90px;height:90px;" class="oe_avatar oe_kanban_avatar"/>
+                                                        <div class="oe_module_desc">
+                                                            <field name="name"/>
+                                                        </div>
+                                                         <div class="oe_module_desc">
+                                                            <field name="phone"/>
+                                                        </div>
+                                                         <div class="oe_module_desc">
+                                                            <field name="comment"/>
+                                                        </div>
+                                                        <div class="oe_module_desc">
+                                                                <field name="function"/>
+                                                        </div>
+                                                        <!--<div class="oe_module_desc">-->
+                                                            <!--<field name="name"/>-->
+                                                            <!--<field name="title"/>-->
+                                                            <!--<field name="phone"/>-->
+                                                            <!--<field name="function"/>-->
+                                                            <!--<field name="comment"/>-->
+                                                        <!--</div>-->
+                                                    </div>
+                                                </div>
+                                                <!--<div class="o_kanban_image" style="width:90px;height:90px">-->
+                                                    <!--<img style="width:80px;height:80px"  t-att-src='_s + "/base/static/src/img/avatar.png"'/>-->
+                                                <!--</div>-->
+                                                <!--<div class="oe_kanban_details">-->
+                                                    <!--<div><field name="name"/></div>-->
+                                                    <!--<div><field name="phone"/></div>-->
+                                                    <!--<div><field name="comment"/></div>-->
+                                                    <!--<div><field name="function"/></div>-->
+                                                <!--</div>-->
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                        <!--<tree editable="bottom">-->
+                                            <!--<field name="name"/>-->
+                                            <!--<field name="title"/>-->
+                                            <!--<field name="phone"/>-->
+                                            <!--<field name="function"/>-->
+                                            <!--<field name="comment"/>-->
+                                        <!--</tree>-->
+                                    </field>
+                            </group>
+                        </page>
+                        <page string="财务资料" groups="base.group_system,loan.manager,loan_after.group_loan_record_finance">
+                            <group groups="base.group_system,loan.manager,loan_after.group_loan_record_user">
+                                <group>
+                                    <field name="total_amount" readonly="1"/>
+                                    <field name="loans" readonly="1" />
+                                    <field name="contract_rate" readonly="1" />
+                                    <field name="or_loansinterest" readonly="1"/>
+                                    <field name="bank_rate" readonly="1"/>
+                                    <field name="loansinterest_ratio" readonly="1"/>
+                                    <field name="month_payment" readonly="1"/>
+                                    <field name="first_payment" readonly="1"/>
+                                    <field name="down_payment" readonly="1"/>
+                                    <field name="repayment_periods_number" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="can_edit_finance" invisible="1"/>
+                                    <field name="loansinterest"
+                                           attrs="{'readonly':[('can_edit_finance','=',False),],}"  readonly="1" />
+                                    <field name="bank_date"
+                                           attrs="{'readonly':[('can_edit_finance','=',False),],}"  readonly="1"/>
+                                    <field name="pay_client"
+                                           attrs="{'readonly':[('can_edit_finance','=',False),],}"  readonly="1"/>
+                                    <field name="pay_account"
+                                            ttrs="{'readonly':[('can_edit_finance','=',False),],}"  readonly="1"/>
+                                    <field name="cardholder"
+                                            ttrs="{'readonly':[('can_edit_finance','=',False),],}"  readonly="1"/>
+                                    <field name="advance_payment"
+                                           attrs="{'readonly':[('can_edit_finance','=',False),],}"  readonly="1"/>
+                                    <field name="advance_date"
+                                           attrs="{'readonly':[('can_edit_finance','=',False),],}"  readonly="1"/>
+                                    <field name="security_cost"
+                                           attrs="{'readonly':[('can_edit_finance','=',False),],}"  readonly="1"/>
+                                    <field name="basis_rate"
+                                           attrs="{'readonly':[('can_edit_finance','=',False),],}"  readonly="1"/>
+                                    <field name="finance_stage" />
+                                     <!--<field name="loansinterest"-->
+                                           <!--attrs="{'readonly':[('can_edit_finance','=',False),],-->
+                                           <!--'required':[('can_edit_finance','=',True),]}"/>-->
+                                    <!--<field name="bank_date"-->
+                                           <!--attrs="{'readonly':[('can_edit_finance','=',False),],-->
+                                           <!--'required':[('can_edit_finance','=',True),]}"/>-->
+                                    <!--<field name="pay_client"-->
+                                           <!--attrs="{'readonly':[('can_edit_finance','=',False),],-->
+                                           <!--'required':[('can_edit_finance','=',True),]}"/>-->
+                                    <!--<field name="advance_payment"-->
+                                           <!--attrs="{'readonly':[('can_edit_finance','=',False),],-->
+                                           <!--'required':[('can_edit_finance','=',True),]}"/>-->
+                                    <!--<field name="advance_date"-->
+                                           <!--attrs="{'readonly':[('can_edit_finance','=',False),],-->
+                                           <!--'required':[('can_edit_finance','=',True),]}"/>-->
+                                    <!--<field name="security_cost"-->
+                                           <!--attrs="{'readonly':[('can_edit_finance','=',False),],-->
+                                           <!--'required':[('can_edit_finance','=',True),]}"/>-->
+                                    <!--<field name="basis_rate"-->
+                                           <!--attrs="{'readonly':[('can_edit_finance','=',False),],-->
+                                           <!--'required':[('can_edit_finance','=',True),]}"/>-->
+                                </group>
+                            </group>
+
+                        </page>
+                        <page string='抵押情况'  groups="base.group_system,loan.manager,loan_after.group_loan_record_market">
+                            <group>
+                                <group>
+                                    <field name="pledge_case" attrs="{'readonly':[('can_edit_market','=',False),]}" readonly="1" />
+                                    <field name="pledge_date" attrs="{'readonly':[('can_edit_market','=',False),]}"  readonly="1"/>
+                                    <field name="collect_date" attrs="{'readonly':[('can_edit_market','=',False),]}"  readonly="1"/>
+                                    <field name="collect_key" attrs="{'readonly':[('can_edit_market','=',False),]}"  readonly="1"/>
+                                    <field name="overdue_num" attrs="{'readonly':[('can_edit_market','=',False),]}"  readonly="1"/>
+                                </group>
+                                <group invisible="1">
+                                    <templates>
+                                        <ul style="list-style-type:none; margin-top: 5px">
+                                            <li style="list-style-type:none; margin-top: 5px">
+                                                <button class="oe_highlight"  name="original_details" type="object" string="原件详情"/>
+                                            </li>
+                                            <li style="list-style-type:none; margin-top: 5px">
+                                                <button class="oe_highlight"  name="copies_details" type="object" string="复印机详情"/>
+                                            </li>
+                                        </ul>
+                                    </templates>
+                                    <!--<div class="oe_button_box" name="button_box">-->
+                                        <!--<button  name="original_details" type="object" string="原件详情"/>-->
+                                        <!--<button  name="copies_details" type="object" string="原件详情"/>-->
+                                    <!--</div>-->
+                                </group>
+                            </group>
+                            <!-- 考虑用弹框显示，先把抵押件详情隐藏-->
+                            <group>
+                                <group>
+                                    <field name="can_edit_market" invisible="1"/>
+                                    <field name="original1" attrs="{'readonly':[('can_edit_market','=',False),]}" readonly="1"/>
+                                    <field name="original2" attrs="{'readonly':[('can_edit_market','=',False),]}" readonly="1"/>
+                                    <field name="original3" attrs="{'readonly':[('can_edit_market','=',False),]}" readonly="1"/>
+                                    <field name="original4" attrs="{'readonly':[('can_edit_market','=',False),]}" readonly="1"/>
+                                    <field name="original5" attrs="{'readonly':[('can_edit_market','=',False),]}" readonly="1"/>
+                                    <field name="original6" attrs="{'readonly':[('can_edit_market','=',False),]}" readonly="1"/>
+                                    <field name="original_stage" readonly="1"/>
+                                    <field name="original_time" readonly="1"/>
+                                </group>
+                                <group>
+
+                                    <field name="copies1" attrs="{'readonly':[('can_edit_market','=',False),]}" readonly="1"/>
+                                    <field name="copies2" attrs="{'readonly':[('can_edit_market','=',False),]}" readonly="1"/>
+                                    <field name="copies3" attrs="{'readonly':[('can_edit_market','=',False),]}" readonly="1"/>
+                                    <field name="copies4" attrs="{'readonly':[('can_edit_market','=',False),]}" readonly="1"/>
+                                    <field name="copies5" attrs="{'readonly':[('can_edit_market','=',False),]}" readonly="1"/>
+                                    <field name="copies6" attrs="{'readonly':[('can_edit_market','=',False),]}" readonly="1"/>
+                                    <field name="copies_stage" readonly="1"/>
+                                    <field name="copies_time" readonly="1"/>
+                                </group>
+                            </group>
+
+                        </page>
+                        <page string="调查情况">
+                            <group>
+                                <group name="left">
+                                    <field name="credit_time" readonly="1"/>
+                                    <field name="credit" readonly="1"/>
+                                </group>
+                                <group name="right">
+                                    <field name="homing_time" readonly="1"/>
+                                    <field name="homing_id" readonly="1"/>
+                                    <field name="homing_result" readonly="1"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group>
+                                    <field name="phoning_time" readonly="1"/>
+                                    <field name="phoning_id" readonly="1"/>
+                                    <field name="phoning_result" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="GPS意见">
+                            <group>
+                                <field name="GPS_suggest" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="loan_suggest" readonly="1"/>
+                            </group>
+                        </page>
+                        <page string="附件">
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                        </page>
+                    </notebook>
+
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                     <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!--下面是看板视图-->
+    <record id="view_loan_record_kanban" model="ir.ui.view">
+        <field name="loan.record.view.kanban"/>
+        <field name="model">loan.record</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_small_collum" default_group_by="stage_id">
+                <field name="stage_id"/>
+                <field name="color"/>
+                <field name="kanban_state"/>
+                <field name="priority"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{kanban_color(record.color.raw_value)}  oe_kanban_global_click">
+                            <div class="o_dropdown_kanban dropdown">
+                                <!-- Tor-right drop down menu here-->
+                            </div>
+                            <div class="oe_kanban_content">
+                                <div class="o_dropdown_kanban dropdown">
+                                    <a class="dropdown-toggle btn" data-toggle="dropdown" href="javascript:void(0)">
+                                        <span class="fa fa-bars fa-lg"/>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" arialabelledby="dLabel">
+                                        <t t-if="widget.editable">
+                                            <li>
+                                                <a type="edit">编辑</a>
+                                            </li>
+                                        </t>
+                                        <t t-if="widget.deletable">
+                                            <li>
+                                                <a type="delete">删除</a>
+                                            </li>
+                                        </t>
+                                        <li>
+                                            <a type="object" name="action_edit_finance">财务补充</a>
+                                        </li>
+                                        <li>
+                                            <a type="object" name="action_edit_bank_num">银行卡补录</a>
+                                        </li>
+                                        <li>
+                                            <a type="object" name="action_edit_pledge_case">抵押确认</a>
+                                        </li>
+                                        <li>
+                                            <a type="object" name="action_edit_original_record">原件记录</a>
+                                        </li>
+                                        <li>
+                                            <a type="object" name="action_edit_copies_record">扫描件记录</a>
+                                        </li>
+                                        <li>
+                                            <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong>
+                                        <a type="open">
+                                            <field name="apply_id"/>
+                                            <field name="phone"/>
+                                        </a>
+                                    </strong>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <span style="color:#333;">产品：</span>
+                                        <field name="product_id"/>
+                                    </li>
+                                    <!--<li>-->
+                                        <!--<span style="color:#333;">身份证地址：</span>-->
+                                        <!--<field name="address"/>-->
+                                    <!--</li>-->
+                                    <!--<li>-->
+                                        <!--<span style="color:#333;">家访地址：</span>-->
+                                        <!--<field name="maddress"/>-->
+                                    <!--</li>-->
+                                    <li>
+                                        <span style="color:#333;">原件回齐：</span>
+                                        <field name="original_stage"/>
+                                    </li>
+                                    <li>
+                                        <span style="color:#333;">客户经理：</span>
+                                        <field name="saler_id"/>
+                                    </li>
+                                </ul>
+                                <div class="oe_kanban_footer">
+                                    <div>
+                                        <field name="priority" widget="priority"/>
+                                    </div>
+                                    <div>
+                                        <field name="kanban_state" widget="kanban_state_selection"/>
+                                        <img t-att-src="kanban_image('res.users', 'image_small',)"
+                                                     width="24" height="24" class="oe_kanban_avatar pull-right"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="oe_clear"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- 银行卡信息补录，均为可写字段-->
+    <record id="edit_loan_record_bank_num_form" model="ir.ui.view">
+        <field name="name">银行卡信息补录</field>
+        <field name="model">loan.record</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="cardholder"/>
+                        <field name="pay_account"/>
+                    </group>
+                    <group>
+                        <field name="bank_card" widget="image" class="oe_avatar"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- 抵押确认，form表单-->
+    <record id="view_loan_record_pledge_case_form" model="ir.ui.view">
+        <field name="name">抵押确认</field>
+        <field name="model">loan.record</field>
+        <field name="arch" type="xml">
+            <form>
+                <group name="group_top">
+                    <group>
+                        <field name="pledge_case" />
+                        <field name="pledge_date" />
+                        <field name="collect_date"/>
+                        <field name="collect_key" />
+                        <field name="overdue_num"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- 编辑原件记录，form表单-->
+    <record id="view_loan_record_original_record_form" model="ir.ui.view">
+        <field name="name">原件记录</field>
+        <field name="model">loan.record</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="can_edit_market" invisible="1"/>
+                        <field name="original1" attrs="{'readonly':[('can_edit_market','=',False),]}"/>
+                        <field name="original2" attrs="{'readonly':[('can_edit_market','=',False),]}"/>
+                        <field name="original3" attrs="{'readonly':[('can_edit_market','=',False),]}"/>
+                        <field name="original4" attrs="{'readonly':[('can_edit_market','=',False),]}"/>
+                        <field name="original5" attrs="{'readonly':[('can_edit_market','=',False),]}"/>
+                        <field name="original6" attrs="{'readonly':[('can_edit_market','=',False),]}"/>
+                        <field name="original_stage"/>
+                        <field name="original_time"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+     <!-- 编辑扫描件记录，form表单-->
+    <record id="view_loan_record_copies_record_form" model="ir.ui.view">
+        <field name="name">扫描件记录</field>
+        <field name="model">loan.record</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="copies1"/>
+                    <field name="copies2"/>
+                    <field name="copies3"/>
+                    <field name="copies4"/>
+                    <field name="copies5"/>
+                    <field name="copies6" />
+                    <field name="copies_stage"/>
+                    <field name="copies_time"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_loan_record_graph" model="ir.ui.view">
+        <field name="name">loan.record.graph</field>
+        <field name="model">loan.record</field>
+        <field name="arch" type="xml">
+            <graph string="数据补充" type="bar">
+                <field name="create_date" type="row"/>
+                <field name="stage_id" type="row"/>
+                <field name="saler_id" type="row"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_loan_record_pivot" model="ir.ui.view">
+        <field name="name">loan.record.pivot</field>
+        <field name="model">loan.record</field>
+        <field name="arch" type="xml">
+            <pivot string="数据补充">
+                <field name="create_date" type="col" interval="day"/>
+                <field name="stage_id" type="row"/>
+                <field name="saler_id" type="row"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_loan_after_tree" model="ir.ui.view">
+        <field name="name">loan.count.view.list</field>
+        <field name="model">loan.record</field>
+        <field name="view_id" ref="loan_after.view_loan_after_form"/>
+        <field name="arch" type="xml">
+            <tree string="贷后基础资料" default_orde="order desc">
+                <field name="order"/>
+                <field name="apply_id"/>
+                <field name="identity"/>
+                <!--<field name="phone"/>-->
+                <field name="pledge_state"/>
+                <field name="saler_id" invisible="1"/>
+                <field name="saler_name"/>
+                <field name="finance_state"/>
+                <field name="stage_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_loan_basis" model="ir.actions.act_window">
+        <field name="name">基础数据</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">loan.record</field>
+        <field name="view_id" ref="loan_after.view_loan_after_tree"/>
+        <field name="view_mode">tree,form,kanban,graph,pivot</field>
+    </record>
+
+
+    <menuitem id="menu_loan_after" name="贷后管理" parent="loan.menu_loan" sequence="13" groups="base.group_system,loan_after.group_loan_record_user,loan.group_loan_manager" />
+    <menuitem id="menu_loan_basis_data" name="基础数据" parent="menu_loan_after"
+              sequence="0" action="action_loan_basis" groups="base.group_system,loan_after.group_loan_record_user,loan.group_loan_manager"/>
+</odoo>

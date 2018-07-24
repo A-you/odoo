@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--批量处理原件记录form表单-->
+    <record id="loan_record_copies_mass_form" model="ir.ui.view">
+        <field name="name">loan.record.copies.form</field>
+        <field name="model">loan.record.copies</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="copies1"/>
+                        <field name="copies2"/>
+                        <field name="copies3"/>
+                    </group>
+                    <group>
+                        <field name="copies4"/>
+                        <field name="copies5"/>
+                        <field name="copies6"/>
+                    </group>
+                </group>
+                <footer>
+                     <button type="object" name="do_mass_update"
+                            string="更新并保存" class="oe_highlight"/>
+                    <button special="cancel" string="取消"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="action_loan_record_copies_mass"
+                name="扫描件处理" src_model="loan.record"
+                res_model="loan.record.copies" view_mode="form"
+                target="new" multi="True"/>
+</odoo>

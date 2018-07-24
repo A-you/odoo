@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="view_loan_borrower_graph" model="ir.ui.view">
+            <field name="name">loan.borrower.graph</field>
+            <field name="model">loan.borrower</field>
+            <field name="arch" type="xml">
+                <graph string="客户录入" type="bar">
+                    <field name="create_date" type="row"/>
+                    <field name="state" type="row"/>
+                    <field name="saler_id" type="row"/>
+                </graph>
+            </field>
+        </record>
+        <record id="view_loan_borrower_pivot" model="ir.ui.view">
+            <field name="name">loan.borrower.pivot</field>
+            <field name="model">loan.borrower</field>
+            <field name="arch" type="xml">
+                <pivot string="客户录入" disable_linking="True">
+                    <field name="create_date" interval="month" type="col"/>
+                    <field name="state" type="row"/>
+                    <field name="saler_id" type="row"/>
+                </pivot>
+            </field>
+        </record>
+        <record id="view_loan_credit_graph" model="ir.ui.view">
+            <field name="name">loan.credit.graph</field>
+            <field name="model">loan.credit</field>
+            <field name="arch" type="xml">
+                <graph string="征信查询" type="bar">
+                    <field name="create_date" type="row"/>
+                    <field name="state" type="row"/>
+                    <field name="saler_id" type="row"/>
+                </graph>
+            </field>
+        </record>
+        <record id="view_loan_credit_pivot" model="ir.ui.view">
+            <field name="name">loan.credit.pivot</field>
+            <field name="model">loan.credit</field>
+            <field name="arch" type="xml">
+                <pivot string="征信查询" disable_linking="True">
+                    <field name="create_date" interval="month" type="col"/>
+                    <field name="state" type="row"/>
+                    <field name="saler_id" type="row"/>
+                </pivot>
+            </field>
+        </record>
+        <record id="view_loan_loan_graph" model="ir.ui.view">
+            <field name="name">loan.loan.graph</field>
+            <field name="model">loan.loan</field>
+            <field name="arch" type="xml">
+                <graph string="业务申请" type="bar">
+                    <field name="create_date" type="row"/>
+                    <field name="state" type="row"/>
+                    <field name="saler_id" type="row"/>
+                    <field name="loans" type="measure"/>
+                </graph>
+            </field>
+        </record>
+        <record id="view_loan_loan_pivot" model="ir.ui.view">
+            <field name="name">loan.loan.pivot</field>
+            <field name="model">loan.loan</field>
+            <field name="arch" type="xml">
+                <pivot string="业务申请" disable_linking="True">
+                    <field name="create_date" interval="month" type="col"/>
+                    <field name="state" type="row"/>
+                    <field name="saler_id" type="row"/>
+                    <field name="loans" type="measure"/>
+                    <field name="contract_rate" type="measure"/>
+                    <field name="loansinterest_ratio" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+        <record id="view_loan_apply_graph" model="ir.ui.view">
+            <field name="name">loan.apply.graph</field>
+            <field name="model">loan.apply</field>
+            <field name="arch" type="xml">
+                <graph string="请款申请" type="bar">
+                    <field name="create_date" type="row"/>
+                    <field name="state" type="row"/>
+                    <field name="saler_id" type="row"/>
+                    <field name="loans" type="measure"/>
+                </graph>
+            </field>
+        </record>
+        <record id="view_loan_apply_pivot" model="ir.ui.view">
+            <field name="name">loan.apply.pivot</field>
+            <field name="model">loan.apply</field>
+            <field name="arch" type="xml">
+                <pivot string="请款申请" disable_linking="True">
+                    <field name="create_date" interval="month" type="col"/>
+                    <field name="state" type="row"/>
+                    <field name="saler_id" type="row"/>
+                    <field name="loans" type="measure"/>
+                    <field name="contract_rate" type="measure"/>
+                    <field name="loansinterest_ratio" type="measure"/>
+
+                </pivot>
+            </field>
+        </record>
+    </data>
+</odoo>
